@@ -1,37 +1,21 @@
-document.getElementById("quoteForm").addEventListener("submit", function(e) {
-    e.preventDefault();
-    const businessType = document.getElementById("businessType").value;
-    const state = document.getElementById("state").value;
-    const coverageLimit = parseFloat(document.getElementById("coverageLimit").value);
+const states = ["AL","AK","AZ","AR","CA","CO","CT","DE","FL","GA","HI","ID","IL","IN","IA","KS","KY","LA","ME","MD","MA","MI","MN","MS","MO","MT","NE","NV","NH","NJ","NM","NY","NC","ND","OH","OK","OR","PA","RI","SC","SD","TN","TX","UT","VT","VA","WA","WV","WI","WY"];
+const stateSelect = document.getElementById('state');
+states.forEach(state => {
+  const opt = document.createElement('option');
+  opt.value = opt.textContent = state;
+  stateSelect.appendChild(opt);
+});
 
-    let baseRate = 0.02;
+function showStep2() {
+  document.getElementById('step2-form').classList.remove('hidden');
+}
 
-    if (businessType === "retail") baseRate += 0.005;
-    if (businessType === "restaurant") baseRate += 0.01;
-    if (state === "CA") baseRate += 0.003;
+function toggleChat() {
+  const chatBox = document.getElementById('chat-box');
+  chatBox.style.display = chatBox.style.display === 'block' ? 'none' : 'block';
+}
 
-    const premium = (coverageLimit * baseRate).toFixed(2);
-
-    document.getElementById("quoteResult").style.display = "block";
-    document.getElementById("quoteResult").innerHTML = `
-      <strong>Estimated Premium:</strong> $${premium}<br>
-      <em>Business Type:</em> ${businessType}<br>
-      <em>State:</em> ${state}<br>
-      <em>Coverage Limit:</em> $${coverageLimit.toLocaleString()}
-    `;
-  });
-
-  const chatBtn = document.getElementById('chatButton');
-  const tooltip = document.getElementById('chatTooltip');
-
-  chatBtn.addEventListener('mouseover', () => {
-    tooltip.style.display = 'block';
-  });
-
-  chatBtn.addEventListener('mouseout', () => {
-    tooltip.style.display = 'none';
-  });
-
-  chatBtn.addEventListener('click', () => {
-    alert('Launching team chat... (This would integrate with chat system)');
-  });
+document.getElementById('step2-form').addEventListener('submit', function(e) {
+  e.preventDefault();
+  alert('Your submission has been received. An underwriter will review it shortly.');
+});
